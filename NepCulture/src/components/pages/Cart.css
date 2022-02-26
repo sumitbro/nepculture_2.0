@@ -1,0 +1,24 @@
+.cart {
+    text-align: center;
+    justify-content: center;
+    margin: 100px 0px;
+    padding: 50px;
+    margin-bottom: 200px;
+    overflow: auto;
+}
+
+.cart h1 {
+    margin: 50px;
+}
+
+.__continue {
+    width: 400px;
+    background-color: transparent;
+    color: chocolate;
+    border: 2px solid chocolate;
+    height: 20%;
+}
+
+.__continue:hover {
+    background-color: rgba(210, 105, 30, 0.212);
+}
