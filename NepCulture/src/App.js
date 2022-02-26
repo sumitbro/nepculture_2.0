@@ -17,13 +17,18 @@ import Exhibition from './components/pages/Exhibition';
 import Profile from './components/pages/Profile';
 import Itemdetail from './components/Itemdetail';
 import Blogdetail from './components/Blogdetail';
-
+import Activate from './components/pages/Activate';
+import Reset_password from './components/pages/Reset_password';
+import Reset_password_confirm from './components/pages/Reset_password_confirm';
 import ItemBuy from './components/ItemBuy';
 import Cart from './components/Cart';
+import {Provider} from 'react-redux';
+import store from './store';
 
 function App() {
   return (
     <>
+    <Provider store={store}>
       <Router>
         <Navbar />
         <Switch>
@@ -37,9 +42,13 @@ function App() {
           <Route path='/blog_detail' component={Blogdetail} />
           <Route path='/itembuy' component={ItemBuy} />
           <Route path='/main-cart-section' component={Cart} />
+          <Route  path='/reset-password' component={Reset_password} />
+          <Route  path='/password/reset/confirm/:uid/:token' component={Reset_password_confirm} />
+          <Route  path='/activate/:uid/:token' component={Activate} />
         </Switch>
         <Footer />
       </Router>
+      </Provider>
 
     </>
   );
