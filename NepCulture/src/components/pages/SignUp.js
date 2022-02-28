@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { login } from "../../actions/auth";
 import "./SignUp.css";
 
-const SignUp = ({ login }) => {
+const SignUp = ({ login, IsAuthenticated }) => {
   const [formdata, Setformdata] = useState({
     email: "",
     password: "",
@@ -15,9 +15,12 @@ const SignUp = ({ login }) => {
   const onSubmit = (e) => {
     e.preventDefault();
     login(email, password);
-    console.log("login");
+    // console.log("login");
     // console.log(formdata)
   };
+  if (IsAuthenticated) {
+    return <Redirect to="/" />;
+  }
 
   return (
     <div>
@@ -65,10 +68,10 @@ const SignUp = ({ login }) => {
   );
 };
 
-// const mapStateToProps= state=>({
-// //is authenticated
-// });
-export default connect(null, { login })(SignUp);
+const mapStateToProps = (state) => ({
+  IsAuthenticated: state.auth.IsAuthenticated,
+});
+export default connect(mapStateToProps, { login })(SignUp);
 
 // class SignUp extends React.Component {
 //     state = {
