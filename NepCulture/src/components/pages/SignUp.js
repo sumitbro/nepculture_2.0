@@ -1,124 +1,77 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
-import { login } from "../../actions/auth";
-import "./SignUp.css";
+import { signup } from "../../actions/auth";
+import "./Signin.css";
 
-const SignUp = ({ login, isAuthenticated }) => {
-  const [formdata, Setformdata] = useState({
-    email: "",
-    password: "",
-  });
-  const { email, password } = formdata;
-  const onChange = (e) =>
-    Setformdata({ ...formdata, [e.target.name]: e.target.value });
-  const onSubmit = (e) => {
-    e.preventDefault();
-    login(email, password);
-    // console.log("login");
-    // console.log(formdata)
-  };
-  if (isAuthenticated) {
-    return <Redirect to="/" />
-  }
 
-  return (
-    <div>
-      <h1>SignUp and Login</h1>
-      <div className="sign-up">
-        <div className="div-login">
-          <div className="div-login-logo">
-            Login &nbsp;
-            <i class="fas fa-user" />
-          </div>
-          <div className="login-container">
-            <form onSubmit={(e) => onSubmit(e)}>
-              <input
-                type="email"
-                name="email"
-                value={email}
-                placeholder="Email Address"
-                required
-                onChange={(e) => {
-                  onChange(e);
-                }}
-              />
-              <input
-                type="password"
-                name="password"
-                value={password}
-                placeholder="Password"
-                required
-                onChange={(e) => {
-                  onChange(e);
-                }}
-              />
-              <button>Log In</button>
-            </form>
-          </div>
-          <h6 className="mt-3">
-            Forgot Password?{" "}
-            <button>
-              <Link to="/reset-password">Reset Password</Link>
-            </button>
-          </h6>
+const SignUp = ({ signup, isAuthenticated }) => {
+    const [accountCreated, setAccountCreated] = useState(false);
+    const [formData, setFormData] = useState({
+        username: '',
+        email: '',
+        password: '',
+        re_password: ''
+    });
+
+    const { username, email, password, re_password } = formData;
+
+    const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
+
+    const onSubmit = e => {
+        e.preventDefault();
+
+        if (password === re_password) {
+            signup(username, email, password, re_password);
+            setAccountCreated(true);
+        }
+    };
+
+    // if (isAuthenticated) {
+    //     return <Redirect to='/' />
+    // }
+    if (accountCreated) {
+        return <Redirect to='/sign-in' />
+    }
+    return (
+        <div>
+            {/* <h1>SignUp and Login</h1> */}
+            <div className="sign-up">
+                <div className="div-login">
+
+                    <div className='div-login-logo'>
+                        Register &nbsp;<i class="fas fa-users" />
+                    </div>
+                    <div className='register-container'>
+                        <form onSubmit={e => onSubmit(e)}>
+                            <input type='text' name='username' value={username} placeholder=' Name' onChange={e => onChange(e)} required />
+                            <input type='email' name='email' value={email} placeholder='Email Address' required onChange={e => onChange(e)} />
+                            <input type='password' name='password' value={password} placeholder='Password' minLength='6' required onChange={e => onChange(e)} />
+                            <input type='password' name='re_password' value={re_password} placeholder='Confirm Password' minLength='6' required onChange={e => onChange(e)} />
+                            <button >Register</button>
+                        </form>
+                    </div>
+                    <h6 className="mt-3">
+                        Already have account?{" "}
+                        <button>
+                            <Link to="/sign-in">SignIn</Link>
+                        </button>
+                    </h6>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  );
-};
 
-const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated,
+
+
+
+
+    )
+}
+
+
+
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated
 });
-export default connect(mapStateToProps, { login })(SignUp);
 
-// class SignUp extends React.Component {
-//     state = {
-//         email: '',
-//         pwd: ''
-//     }
-
-//     handleChange = (e) => {
-//         const { name, value } = e.target
-//         this.setState({ [name]: value })
-//     }
-
-//     handleSubmit = (e) => {
-//         e.preventDefault()
-//         this.props.isLogin(true)
-//     }
-//     render() {
-//         return (
-//             <div className='sign-up'>
-//                 <div className='div-login'>
-//                     <div className='div-login-logo'>
-//                         Login &nbsp;<i class="fas fa-user" />
-//                     </div>
-//                     <div className='login-container'>
-//                         <form onSubmit={this.handleSubmit}>
-//                             <input type='email' name='email' placeholder='Email Address' required onChange={this.handleChange} />
-//                             <input type='password' name='pwd' placeholder='Password' required onChange={this.handleChange} />
-//                             <button onSubmit={this.handleSubmit}>Log In</button>
-//                         </form>
-//                     </div>
-//                 </div>
-//                 <div className='div-login'>
-//                     <div className='div-login-logo'>
-//                         Register &nbsp;<i class="fas fa-users" />
-//                     </div>
-//                     <div className='register-container'>
-//                         <form onSubmit={this.handleSubmit}>
-//                             <input type='text' name='text' placeholder='First Name' required />
-//                             <input type='text' name='text' placeholder='Last Name' required />
-//                             <input type='email' name='email' placeholder='Email Address' required onChange={this.handleChange} />
-//                             <input type='password' name='pwd' placeholder='Password' required onChange={this.handleChange} />
-//                             <input type='password' name='cpwd' placeholder='Confirm Password' required onChange={this.handleChange} />
-//                             <button onSubmit={this.handleSubmit}>Register</button>
-//                         </form>
-//                     </div>
-//                 </div>
-//             </div>
-//         )
-//     }
-// }
+export default connect(mapStateToProps, { signup })(SignUp);

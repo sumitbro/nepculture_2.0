@@ -10,7 +10,8 @@ import Footer from "./components/Footer";
 // import Services from './components/pages/Services';
 // import Products from './components/pages/Products';
 
-import SignUp from "./components/pages/SignUp";
+import Signin from "./components/pages/Signin";
+import SignUp from "./components/pages/Signup";
 import Exhibition from "./components/pages/Exhibition";
 import Profile from "./components/pages/Profile";
 import Itemdetail from "./components/Itemdetail";
@@ -34,6 +35,7 @@ function App() {
             <Route path="/" exact component={Home} />
             <Route path="/about" component={About} />
             <Route path="/blogs" component={Blogs} />
+            <Route path="/sign-in" component={Signin} />
             <Route path="/sign-up" component={SignUp} />
             <Route path="/exhibition" component={Exhibition} />
             <Route path="/profile" component={Profile} />
