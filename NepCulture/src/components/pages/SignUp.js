@@ -4,7 +4,7 @@ import { Link, Redirect } from "react-router-dom";
 import { login } from "../../actions/auth";
 import "./SignUp.css";
 
-const SignUp = ({ login, IsAuthenticated }) => {
+const SignUp = ({ login, isAuthenticated }) => {
   const [formdata, Setformdata] = useState({
     email: "",
     password: "",
@@ -18,8 +18,8 @@ const SignUp = ({ login, IsAuthenticated }) => {
     // console.log("login");
     // console.log(formdata)
   };
-  if (IsAuthenticated) {
-    return <Redirect to="/" />;
+  if (isAuthenticated) {
+    return <Redirect to="/" />
   }
 
   return (
@@ -69,7 +69,7 @@ const SignUp = ({ login, IsAuthenticated }) => {
 };
 
 const mapStateToProps = (state) => ({
-  IsAuthenticated: state.auth.IsAuthenticated,
+  isAuthenticated: state.auth.isAuthenticated,
 });
 export default connect(mapStateToProps, { login })(SignUp);
 

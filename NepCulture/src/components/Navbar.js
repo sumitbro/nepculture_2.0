@@ -4,7 +4,7 @@ import { Link, Redirect } from "react-router-dom";
 import "./Navbar.css";
 import { logout } from "../actions/auth";
 import { connect } from "react-redux";
-function Navbar({ logout, IsAuthenticated }) {
+function Navbar({ logout, isAuthenticated }) {
   const [redirect, setRedirect] = useState(false);
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
@@ -31,16 +31,21 @@ function Navbar({ logout, IsAuthenticated }) {
       <Button buttonStyle="btn--outline">Login / Register</Button>
     
   );
+  
+  const authlink = () => (
+    
+    
+    
+    <Button onClick={logout_user} buttonStyle="btn--outline">
+      LogOut
+    </Button>
+  );
+
   const logout_user = () => {
     logout();
     setRedirect(true);
 };
 
-  const authlink = () => (
-    <Button onClick={logout_user} buttonStyle="btn--outline">
-      LogOut
-    </Button>
-  );
 
   return (
     <>
@@ -111,7 +116,7 @@ function Navbar({ logout, IsAuthenticated }) {
           {/* <Button onClick={logout} buttonStyle="btn--outline">
             LogOut
           </Button> */}
-          {IsAuthenticated?authlink():guestlink()}
+          {isAuthenticated?authlink():guestlink()}
         </div>
       </nav>
       {redirect ? <Redirect to='/' /> : <></>}
@@ -120,7 +125,7 @@ function Navbar({ logout, IsAuthenticated }) {
 }
 
 const mapStateToProps = (state) => ({
-  IsAuthenticated: state.auth.IsAuthenticated,
+  isAuthenticated: state.auth.isAuthenticated,
 });
 
 export default connect(mapStateToProps, { logout })(Navbar);
