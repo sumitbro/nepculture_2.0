@@ -20,6 +20,7 @@ from rest_framework import permissions
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include('accounts.urls')),
+    path('product/', include('product.urls'))
     
     
     # path('', include('nepculture.urls')),

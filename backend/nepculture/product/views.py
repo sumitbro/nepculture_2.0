@@ -12,25 +12,21 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny, IsAu
 # Create your views here.
 
 
-
-
 class Itemlist(ListAPIView):
-    permission_classes= [AllowAny]
-    queryset= Item.objects.all()
-    serializer_class= ItemSerializer
+    permission_classes = [AllowAny]
+    queryset = Item.objects.all()
+    serializer_class = ItemSerializer
     # authentication_classes= [JWTAuthentication]
     # permission_classes= [IsAuthenticated]
-    
+
 
 class Itemretriveupdate(RetrieveUpdateDestroyAPIView):
-    permission_classes= [AllowAny]
-    queryset= Item.objects.all()
-    serializer_class= ItemSerializer
+    permission_classes = [AllowAny]
+    queryset = Item.objects.all()
+    serializer_class = ItemSerializer
 
 
 class Itemcreate(CreateAPIView):
-    permission_classes= [AllowAny]
-    queryset= Item.objects.all()
-    serializer_class= ItemSerializer
-
-     
+    permission_classes = [AllowAny]
+    queryset = Item.objects.all()
+    serializer_class = ItemSerializer

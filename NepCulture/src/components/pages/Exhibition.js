@@ -1,40 +1,80 @@
-import React from 'react';
+import React,{useState, useEffect} from 'react';
 import './Exhibition.css';
 import ExhibitItem from './ExhibitItem';
+import axios from 'axios';
 
-function Exhibition() {
+const  Exhibition=(props)=> {
+
+
+    const [products, setproduct] = useState([])
+
+    useEffect(() => {
+        loadproduct()
+    }, []);
+
+    const loadproduct = async () => {
+        const result = await axios.get(`${process.env.REACT_APP_API_URL}/product/item/`)
+        console.log(result)
+        setproduct(result.data.reverse())
+
+
+
+    }
+
     return (
         <div className='exhibition'>
             <h1> FEATURED EXHIBITION </h1>
+
+            {
+                products.map((product) => (
+                    <div>
+                        {product.title}<br/>
+                        <img src={product.image}></img>
+
+                        {/* {product.image} */}
+
+                    </div>
+
+                    
+                ))
+            }
+
+
+
+            
             <div className='exhibit__container'>
+
+
+
                 <div className='exhibit__wrapper'>
-                    <ul className='exhibit__items'>
-                        <ExhibitItem
-                            src='images/Dipankara_buddha.jpg'
-                            text='DIPANKARA BUDDHA, the destroyer of evil, protector of merchants'
-                            label='Acrylic on Canvas'
-                            path='/item_detail'
-                        />
-                        <ExhibitItem
-                            src='images/Dharmapala Mahakala.jpg'
-                            text='Embrace the wrathful and terrifying looking DHARMAPALA MAHAKALA'
-                            label='Sculpture'
-                            path='/item_detail'
-                        />
-                        <ExhibitItem
-                            src='images/Bhairava.jpg'
-                            text='BHAIRAVA, The face of Bhairava with the standing figure'
-                            label='Mineral Pigment on Canvas'
-                            path='/item_detail'
-                        />
-                        <ExhibitItem
-                            src='images/gods in moonlight.jpeg'
-                            text='Refresh yourself in the Moonlight with LORD KRISHNA'
-                            label='Canvas Art'
-                            path='/item_detail'
-                        />
-                    </ul>
-                    <ul className='exhibit__items'>
+                    {
+                        products.map((product)=>(
+                            <ul className='exhibit__items'>
+                            <ExhibitItem
+                                src={product.image}
+                                text='DIPANKARA BUDDHA, the destroyer of evil, protector of merchants'
+                                label={product.category}
+                                path='/item_detail'
+                            />
+                           
+                        </ul>
+    
+
+                        ))
+                    }
+                   
+
+
+
+
+
+
+
+
+
+
+                    
+                    {/* <ul className='exhibit__items'>
                         <ExhibitItem
                             src='images/Wood_Mandala.jpg'
                             text='Wood Mandala, Apartment Decor, Elegant Wall Art'
@@ -137,7 +177,7 @@ function Exhibition() {
                             label='Gold Statue'
                             path='/item_detail'
                         />
-                    </ul>
+                    </ul> */}
                 </div>
             </div>
         </div>

@@ -16,9 +16,9 @@ CATEGORY_CHOICES=(
 
 )
 class Item(models.Model):
+    category= models.CharField(choices=CATEGORY_CHOICES, max_length=2)
     title= models.CharField(max_length=50)
     price= models.FloatField()
-    category= models.CharField(choices=CATEGORY_CHOICES, max_length=2)
     slug= models.SlugField()
     descreption= models.TextField()
     image= models.ImageField()
