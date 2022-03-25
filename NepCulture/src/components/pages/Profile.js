@@ -13,20 +13,13 @@ import {
 import { useEffect, useState } from "react";
 
 
-
-// let tokenparse = [];
-// let tokenReady = false;
 const Profile = () => {
-  const {  user } = useSelector((state) => state.userReducer)
+  const { user } = useSelector((state) => state.userReducer)
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
     dispatch(load_user());
   }, [dispatch])
-
-
-
-
 
   return (
     <div className="profile">
