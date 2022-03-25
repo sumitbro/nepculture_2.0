@@ -11,13 +11,13 @@ function Cart() {
                 <div className="cart-items">
                     <div className="cart-items-container">
                         <div className="items-info">
-                            <div className="product-img">
+                            {/* <div className="product-img">
                                 <img src="https://www.mona.com.np/get-image/768/04ST2020_1620035459-resized768.jpg" alt="" />
-                            </div>
+                            </div> */}
 
                             <div className="title">
                                 <h2>mithila art1</h2>
-                                <p>size 2x2</p>
+                                {/* <p>size 2x2</p> */}
                             </div>
 
                             <div className="add-minus-quantity">
@@ -41,13 +41,13 @@ function Cart() {
 
 
                         <div className="items-info">
-                            <div className="product-img">
+                            {/* <div className="product-img">
                                 <img src="https://www.mona.com.np/get-image/768/199PA2019_1620039746-resized768.jpg" alt="" />
-                            </div>
+                            </div> */}
 
                             <div className="title">
                                 <h2>mithila art2</h2>
-                                <p>size 2x2</p>
+                                {/* <p>size 2x2</p> */}
                             </div>
 
                             <div className="add-minus-quantity">
@@ -71,13 +71,13 @@ function Cart() {
 
 
                         <div className="items-info">
-                            <div className="product-img">
+                            {/* <div className="product-img">
                                 <img src="https://www.mona.com.np/get-image/768/257PA2020_1619696359-resized768.jpg" alt="" />
-                            </div>
+                            </div> */}
 
                             <div className="title">
                                 <h2>mithila art3</h2>
-                                <p>size 2x2</p>
+                                {/* <p>size 2x2</p> */}
                             </div>
 
                             <div className="add-minus-quantity">

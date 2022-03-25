@@ -39,7 +39,7 @@ function App() {
             <Route path="/sign-up" component={SignUp} />
             <Route path="/exhibition" component={Exhibition} />
             <Route path="/profile" component={Profile} />
-            <Route path="/item_detail" component={Itemdetail} />
+            <Route path="/item_detail/:id" component={Itemdetail} />
             <Route path="/blog_detail" component={Blogdetail} />
             <Route path="/itembuy" component={ItemBuy} />
             <Route path="/main-cart-section" component={Cart} />

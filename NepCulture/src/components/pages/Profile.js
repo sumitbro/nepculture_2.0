@@ -1,13 +1,33 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./Profile.css";
+import { Redirect } from 'react-router-dom';
+import { connect, useDispatch, useSelector } from 'react-redux';
+import { load_user } from '../../actions/auth';
+// import { logout } from "../actions/auth";
 import {
   faYoutube,
   faFacebook,
   faInstagram,
   faLinkedin,
 } from "@fortawesome/free-brands-svg-icons";
+import { useEffect, useState } from "react";
 
+
+
+// let tokenparse = [];
+// let tokenReady = false;
 const Profile = () => {
+  const {  user } = useSelector((state) => state.userReducer)
+  const dispatch = useDispatch();
+  
+  useEffect(() => {
+    dispatch(load_user());
+  }, [dispatch])
+
+
+
+
+
   return (
     <div className="profile">
       <div className="details">
@@ -18,10 +38,10 @@ const Profile = () => {
           />
         </div>
         <div className="per_container">
-          <h1> Personal Information </h1>
+          <h1> Personal Information {user.id} </h1>
           <div className="per_info">
             <div className="per_info1">
-              <p>Name :</p>
+              <p>Name </p>
               <p>E-mail: </p>
               <p>Address: </p>
               <p>Experience: </p>
@@ -30,9 +50,9 @@ const Profile = () => {
               <p>Designation: </p>
             </div>
             <div className="per_info2">
-              <p>Jeevan Rajopadhyay</p>
+              <p>{user?.username}</p>
               <p>Jhapa, Nepal</p>
-              <p>jeevan_rajopadhyay@gmail.com</p>
+              <p>{user?.email}</p>
               <p>2 years</p>
               <p>Newari Cultural Arts</p>
               <p>9844551166</p>
@@ -115,5 +135,9 @@ const Profile = () => {
     </div>
   );
 };
+
+// export default Profile;
+
+
 
 export default Profile;

@@ -92,15 +92,18 @@ function Navbar({ logout, isAuthenticated }) {
                   About
                 </Link>
               </li>
+              {isAuthenticated?
               <li className="nav-item">
-                <Link
-                  to="/profile"
-                  className="nav-links"
-                  onClick={closeMobileMenu}
-                >
-                  <i class="fas fa-user-circle" />
-                </Link>
-              </li>
+              <Link
+                to="/profile"
+                className="nav-links"
+                onClick={closeMobileMenu}
+              >
+                <i class="fas fa-user-circle" />
+              </Link>
+            </li>:""
+              }
+              
               <li className="nav-item">
                 <Link
                   to="/main-cart-section"
@@ -108,6 +111,7 @@ function Navbar({ logout, isAuthenticated }) {
                   onClick={closeMobileMenu}
                 >
                   <i class="fas fa-cart-plus" />
+                  <span>10</span>
                 </Link>
               </li>
             </ul>
