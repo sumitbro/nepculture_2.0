@@ -24,6 +24,8 @@ import Cart from "./components/Cart";
 import { Provider } from "react-redux";
 import store from "./store";
 import Layout from "./hocs/Layout";
+import ProductBanner from "./components/pages/user_product/productbanner";
+import Seller_product_list from "./components/pages/Seller_product_list/Seller_product_list";
 
 function App() {
   return (
@@ -35,10 +37,12 @@ function App() {
             <Route path="/" exact component={Home} />
             <Route path="/about" component={About} />
             <Route path="/blogs" component={Blogs} />
+            <Route path="/user_product" component={ProductBanner} />
             <Route path="/sign-in" component={Signin} />
             <Route path="/sign-up" component={SignUp} />
             <Route path="/exhibition" component={Exhibition} />
             <Route path="/profile" component={Profile} />
+            <Route path="/seller_product_list" component={Seller_product_list} />
             <Route path="/item_detail/:id" component={Itemdetail} />
             <Route path="/blog_detail" component={Blogdetail} />
             <Route path="/itembuy" component={ItemBuy} />

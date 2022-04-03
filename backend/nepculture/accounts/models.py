@@ -1,9 +1,12 @@
+from audioop import add
+from operator import mod
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 from django.utils.translation import gettext_lazy as _
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.conf import settings
+
 # Create your models here.
 
 class UserManager(BaseUserManager):
@@ -40,6 +43,8 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     username= models.CharField(max_length=50, unique=False, null=True)
     email= models.EmailField(max_length=250, unique=True)
+    address= models.CharField(max_length=50, unique=False, null=True)
+    phone= models.BigIntegerField(null=True)
     is_active= models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     # type= models.CharField(_('Type'), max_length=50, choices=Types.choices, null=True)
@@ -51,7 +56,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     # info_created= models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username']
+    REQUIRED_FIELDS = ['username', 'address', 'phone']
 
     objects = UserManager()
 
@@ -64,7 +69,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.username
 
     def __str__(self):
-        return self.email
+        return self.username
 
 
 

@@ -3,3 +3,7 @@ from .models import *
 
 # Register your models here.
 admin.site.register(Item)
+admin.site.register(Store)
+admin.site.register(Product)
+admin.site.register(Cart)
+admin.site.register(Cartitem)

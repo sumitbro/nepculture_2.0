@@ -1,13 +1,21 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { Button } from "./Button";
-import { Link, Redirect } from "react-router-dom";
+import { Link, Redirect, useHistory } from "react-router-dom";
 import "./Navbar.css";
 import { logout } from "../actions/auth";
-import { connect } from "react-redux";
+import { connect, useSelector, useDispatch } from "react-redux";
+import get_cart from "../actions/cart_actions"
+
+
+let tokenparse = [];
+let tokenready = false;
 function Navbar({ logout, isAuthenticated }) {
+
   const [redirect, setRedirect] = useState(false);
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
+
+
 
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
@@ -27,15 +35,10 @@ function Navbar({ logout, isAuthenticated }) {
   window.addEventListener("resize", showButton);
 
   const guestlink = () => (
-    
-      <Button buttonStyle="btn--outline">Login / Register</Button>
-    
+    <Button buttonStyle="btn--outline">Login / Register</Button>
   );
-  
+
   const authlink = () => (
-    
-    
-    
     <Button onClick={logout_user} buttonStyle="btn--outline">
       LogOut
     </Button>
@@ -44,7 +47,39 @@ function Navbar({ logout, isAuthenticated }) {
   const logout_user = () => {
     logout();
     setRedirect(true);
-};
+  };
+
+
+  const { cart, loadingcart } = useSelector((state) => state.cartReducer)
+  const { access } = useSelector((state) => state.auth)
+
+  const [keyword, setkeyword] = useState("");
+  const navigate = useHistory()
+
+
+  const dispatch= useDispatch()
+
+
+  const search = (e, actionkey) => {
+    if (actionkey === "pressed enter") {
+      if (e.keyword === 13) {
+        navigate('/product/', { state: { keyword: keyword, category: "" } });
+      }
+
+    } else {
+      navigate('/product/', { state: { keyword: keyword, category: "" } })
+    }
+  }
+
+
+  useEffect(() => {
+    if (access !== null && access !== "undefined") {
+      tokenparse = (access);
+      console.log(tokenparse)
+      tokenready = (access !== null && access !== "undefined")
+      dispatch(get_cart(tokenparse?.id))
+    }
+  }, [dispatch, access])
 
 
   return (
@@ -76,6 +111,15 @@ function Navbar({ logout, isAuthenticated }) {
               </li>
               <li className="nav-item">
                 <Link
+                  to="/user_product"
+                  className="nav-links"
+                  onClick={closeMobileMenu}
+                >
+                  User_product
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link
                   to="/exhibition"
                   className="nav-links"
                   onClick={closeMobileMenu}
@@ -83,7 +127,7 @@ function Navbar({ logout, isAuthenticated }) {
                   Exhibition
                 </Link>
               </li>
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <Link
                   to="/about"
                   className="nav-links"
@@ -91,28 +135,33 @@ function Navbar({ logout, isAuthenticated }) {
                 >
                   About
                 </Link>
-              </li>
-              {isAuthenticated?
-              <li className="nav-item">
-              <Link
-                to="/profile"
-                className="nav-links"
-                onClick={closeMobileMenu}
-              >
-                <i class="fas fa-user-circle" />
-              </Link>
-            </li>:""
+              </li> */}
+              {isAuthenticated ?
+                <li className="nav-item">
+                  <Link
+                    to="/profile"
+                    className="nav-links"
+                    onClick={closeMobileMenu}
+                  >
+                    <i class="fas fa-user-circle" />
+                  </Link>
+                </li> : ""
               }
-              
+
               <li className="nav-item">
                 <Link
-                  to="/main-cart-section"
+                  to="/main-cart-section" state={{ cartId: cart?.id }}
                   className="nav-links"
                   onClick={closeMobileMenu}
                 >
                   <i class="fas fa-cart-plus" />
-                  <span>10</span>
+                  {!loadingcart ? tokenready ? cart?.quantity !== 0 ? <div>
+                  <span>{cart?.quantity}</span>
+                </div> : <span></span> : <span></span> : <span>0</span>}
+                 
+                  {/* <span>10</span> */}
                 </Link>
+                
               </li>
             </ul>
           </div>
@@ -120,7 +169,7 @@ function Navbar({ logout, isAuthenticated }) {
           {/* <Button onClick={logout} buttonStyle="btn--outline">
             LogOut
           </Button> */}
-          {isAuthenticated?authlink():guestlink()}
+          {isAuthenticated ? authlink() : guestlink()}
         </div>
       </nav>
       {redirect ? <Redirect to='/' /> : <></>}

@@ -20,7 +20,7 @@ class AccountCreateSerializer(UserCreateSerializer):
 #meta class is used to configure serializer to point to a specific model in our project
     class Meta:
         model = User
-        fields = ('id','email','username','password') #list of fields in our model that we wish to manage through serializer
+        fields = ('id','email','username', 'address', 'phone', 'password') #list of fields in our model that we wish to manage through serializer
         extra_kwargs = {
         'password':{
             'write_only':True,

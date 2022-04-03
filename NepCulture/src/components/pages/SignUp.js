@@ -10,11 +10,13 @@ const SignUp = ({ signup, isAuthenticated }) => {
     const [formData, setFormData] = useState({
         username: '',
         email: '',
+        address:'',
+        phone:'',
         password: '',
         re_password: ''
     });
 
-    const { username, email, password, re_password } = formData;
+    const { username, email, address, phone, password, re_password } = formData;
 
     const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
@@ -22,7 +24,7 @@ const SignUp = ({ signup, isAuthenticated }) => {
         e.preventDefault();
 
         if (password === re_password) {
-            signup(username, email, password, re_password);
+            signup(username, email, address, phone, password, re_password);
             setAccountCreated(true);
         }
     };
@@ -45,7 +47,10 @@ const SignUp = ({ signup, isAuthenticated }) => {
                     <div className='register-container'>
                         <form onSubmit={e => onSubmit(e)}>
                             <input type='text' name='username' value={username} placeholder=' Name' onChange={e => onChange(e)} required />
-                            <input type='email' name='email' value={email} placeholder='Email Address' required onChange={e => onChange(e)} />
+                            
+                            <input type='email' name='email' value={email} placeholder='Email' required onChange={e => onChange(e)} />
+                            <input type='text' name='address' value={address} placeholder='Address' onChange={e => onChange(e)} required />
+                            <input type='number' name='phone' value={phone} placeholder='Contact' onChange={e => onChange(e)} required />
                             <input type='password' name='password' value={password} placeholder='Password' minLength='6' required onChange={e => onChange(e)} />
                             <input type='password' name='re_password' value={re_password} placeholder='Confirm Password' minLength='6' required onChange={e => onChange(e)} />
                             <button >Register</button>

@@ -3,6 +3,8 @@ import "./Profile.css";
 import { Redirect } from 'react-router-dom';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { load_user } from '../../actions/auth';
+import {getstore} from "../../actions/user_actions";
+// import {store,isloading} from "../../reducers/Userreducer";
 // import { logout } from "../actions/auth";
 import {
   faYoutube,
@@ -11,15 +13,34 @@ import {
   faLinkedin,
 } from "@fortawesome/free-brands-svg-icons";
 import { useEffect, useState } from "react";
+import StoreInfoPanel from "./StoreInfoPanel/StoreInfoPanel";
+import Createstoreform from "./StoreInfoPanel/Createstoreform";
 
 
+let tokenparse = [];
+let tokenready = false;
 const Profile = () => {
-  const { user } = useSelector((state) => state.userReducer)
+  const [showForm,setshowForm]=useState(false);
+  const [storeCreated,setStoreCreated]= useState(false);
+  const {access}= useSelector((state)=>state.auth)
+  const { user,store, isloading } = useSelector((state) => state.userReducer)
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(load_user());
-  }, [dispatch])
+    if (access !== null && access !== "undefined") {
+      tokenparse = (access);
+      // console.log(tokenparse)
+      tokenready = (access !== null && access !== "undefined")
+      
+      dispatch(load_user(tokenparse?.id));
+      dispatch(getstore(tokenparse?.id))
+    }
+    if(!isloading){
+      if(store?.length!==0){
+        setStoreCreated(true);
+      }
+    }
+  }, [dispatch, isloading, store])
 
   return (
     <div className="profile">
@@ -44,58 +65,28 @@ const Profile = () => {
             </div>
             <div className="per_info2">
               <p>{user?.username}</p>
-              <p>Jhapa, Nepal</p>
               <p>{user?.email}</p>
+              <p>{user?.address}</p>
               <p>2 years</p>
               <p>Newari Cultural Arts</p>
-              <p>9844551166</p>
+              <p>{user?.phone}</p>
               <p>Contemporary Artists</p>
             </div>
           </div>
         </div>
       </div>
-      <div className="profile_about">
-        <h1> About </h1>
-        <div className="paragraph">
-          <p>
-            Artist Jeevan Rajopadhyay, 61, worked with landscapes for a long
-            time. So long that one fine day he decided he was tired of it. There
-            came a time when he felt that the mountains and the trees in his
-            paintings caused disturbances in his creative renderings. With the
-            realization that people, after all, needed change, he started
-            experimenting with other formats of creative expression. He soon
-            found happiness in the fact that he could break free from the
-            limitations of predetermined shapes and boundaries of landscape
-            paintings. I had to transfer my style from one technique to another.
-            I never knew if the work I did was correct or not. Eventually, I
-            presented these works in an exhibition, and the public totally loved
-            them. I felt like I was on the right track. My longing for something
-            new led me to the path I am in now -- the correct path, as far as I
-            am concerned.
-          </p>
-          <p>
-            Born in 1904, Shakya began his artistic career in Lhasa, Tibet, at
-            the age of 18. Buddhism and the influence of the Tibetan Thangka
-            tradition play a central role in his artwork. Drawing inspiration
-            from his work, his son, Siddimuni Shakya, has contributed to the
-            development of Paubha art in Nepal.
-          </p>
 
-          <p>
-            Impressed with Shakya’s early work, General Ramraja had taken him to
-            Illahabad, Uttar Pradesh. Shakya’s art from his time in Illahabad
-            feature a number of different gods. It is also believed that he
-            studied under Purnaman.
-          </p>
-
-          <p>
-            Padmapani Lokeshwor and Buddha Lumbini Vichya are Ananda Muni
-            Shakya’s most notable works. He favored painting, but also practiced
-            handicraft and metalwork. His final artwork was showcased in the
-            Bhaktapur Khowpa Chwami Pucha.
-          </p>
-        </div>
+      <div>
+        <h1>Store</h1>
+        <h5>{storeCreated?'Your Store':'Become a seller'}</h5>
+        {storeCreated?<span></span>:showForm?<div></div>:<button onClick={()=>setshowForm(true)}>Create Store</button>}
+        {storeCreated?<StoreInfoPanel store={store} isloading= {isloading}/>:showForm?<Createstoreform/>:<span></span>}
       </div>
+      <br/>
+      <br/>
+      <br/>
+      {/* <button onCLick={onClick}></button> */}
+
       <div className="social">
         <h1>Find me on</h1>
         <div className="media_profiles">
